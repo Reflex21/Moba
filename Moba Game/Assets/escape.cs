@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class escape : MonoBehaviour
+public class Escape : MonoBehaviour
 {
+
+    public Text API_Key;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +22,6 @@ public class escape : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
-
 
     public void Pause()
     {

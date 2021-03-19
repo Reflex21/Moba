@@ -7,6 +7,7 @@ TagManager:
   - PlayerEyes
   - MainText
   - Feedback
+  - API_Key
   layers:
   - Default
   - TransparentFX
