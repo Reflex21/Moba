@@ -111,9 +111,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13696}
     - Class: 114
-      Script: {instanceID: 14036}
+      Script: {instanceID: 14038}
     - Class: 114
-      Script: {instanceID: 14230}
+      Script: {instanceID: 14232}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -184,7 +184,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13696}
     - Class: 114
-      Script: {instanceID: 14230}
+      Script: {instanceID: 14232}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -255,9 +255,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13936}
     - Class: 114
-      Script: {instanceID: 14230}
+      Script: {instanceID: 14232}
     - Class: 114
-      Script: {instanceID: 14252}
+      Script: {instanceID: 14254}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -967,6 +967,12 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PickupAPI
+  - hash:
+      serializedVersion: 2
       Hash: 50f6928cd8d8a24e5b793b01e11095be
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1109,12 +1115,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PickupAPI
   platform: 2
   scenePathNames:
   - Assets/Scenes/Menu.unity
