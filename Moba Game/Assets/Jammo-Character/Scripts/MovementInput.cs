@@ -45,7 +45,6 @@ public class MovementInput : MonoBehaviour {
 		cam = Camera.main;
 		controller = this.GetComponent<CharacterController> ();
 		Velocity = 2.5f;
-		anim.SetBool("MidActivity", false);
 	}
 	
 	// Update is called once per frame
