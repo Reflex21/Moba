@@ -70,7 +70,7 @@ public class Cylinder : MonoBehaviour
 			apikey = "bypass";
 		}
 		mouse = Random.Range(1, 5);
-		round = 10;
+		round = 12;
 	}
 
 	bool endRound() {
@@ -113,7 +113,7 @@ public class Cylinder : MonoBehaviour
                 "\nAvg Key Accuracy:\t\t" + ((ks / avgKA)*100).ToString() + "%" +
 				"\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
 				"Click here to start new round";
-			if (!apikey.Equals("bypass")) StartCoroutine(sendData(reactions));
+			if (!apikey.Equals("bypass")) StartCoroutine(sendData(reactions, (ms / avgMA).ToString(), (ks / avgKA).ToString()));
 			reactions = new List<reaction>();
 			return true;
 		}
@@ -158,7 +158,7 @@ public class Cylinder : MonoBehaviour
 	    	}
 			if (Input.GetKeyDown(x.Substring(0, 1).ToLower())) {
 				time = Time.time - (time + Time.deltaTime);
-				reactions.Add(new reaction("Key: " + x.Substring(0, 1), i, time));
+				reactions.Add(new reaction(x.Substring(0, 1), i, time));
 				reflex("ReFlex: " + time + "sec\nKey: " + x.Substring(0, 1) + ", Attempts: " + (i));
 				x = x.Substring(Mathf.Min(2, x.Length));
 				text.text = "Press \"" + x + "\"";
@@ -224,25 +224,93 @@ public class Cylinder : MonoBehaviour
 		}
     }
 
-	IEnumerator sendData(List<reaction> datas)
+	IEnumerator sendData(List<reaction> datas, string ma, string ka)
 	{
 		TMP_InputField input = gameObject.GetComponent<TMP_InputField>();
 		var request = new UnityWebRequest("http://3.232.32.88:5000/api/data/unity", "POST");
-		string datapoints = "";
+		string mousepoints = "";
+		string keypoints = "";
+		string qpoints = "";
+		string wpoints = "";
+		string epoints = "";
+		string rpoints = "";
+		string onepoints = "";
+		string twopoints = "";
+		string threepoints = "";
 		reaction[] rs = datas.ToArray();
 		for (int i = 0; i < rs.Length; i++)
 		{
-			if (i == 0)
-			{
-				datapoints += (rs[i].getTime() * 1000).ToString();
+			if (rs[i].getKey().Equals("Mouse")) {
+				if (mousepoints.Equals("")) mousepoints += (rs[i].getTime() * 1000).ToString();
+				else mousepoints += ", " + (rs[i].getTime() * 1000).ToString();
 			}
-			else
-			{
-				datapoints += ", " + (rs[i].getTime() * 1000).ToString();
+			else {
+				if (keypoints.Equals("")) keypoints += (rs[i].getTime() * 1000).ToString();
+				else keypoints += ", " + (rs[i].getTime() * 1000).ToString();
+
+				if (rs[i].getKey().Equals("Q")) {
+					if (qpoints.Equals("")) qpoints += (rs[i].getTime() * 1000).ToString();
+					else qpoints += ", " + (rs[i].getTime() * 1000).ToString();
+				}
+				else if (rs[i].getKey().Equals("W"))
+				{
+					if (wpoints.Equals("")) wpoints += (rs[i].getTime() * 1000).ToString();
+					else wpoints += ", " + (rs[i].getTime() * 1000).ToString();
+				}
+				else if (rs[i].getKey().Equals("E"))
+				{
+					if (epoints.Equals("")) epoints += (rs[i].getTime() * 1000).ToString();
+					else epoints += ", " + (rs[i].getTime() * 1000).ToString();
+				}
+				else if (rs[i].getKey().Equals("R"))
+				{
+					if (rpoints.Equals("")) rpoints += (rs[i].getTime() * 1000).ToString();
+					else rpoints += ", " + (rs[i].getTime() * 1000).ToString();
+				}
+				else if (rs[i].getKey().Equals("1"))
+				{
+					if (onepoints.Equals("")) onepoints += (rs[i].getTime() * 1000).ToString();
+					else onepoints += ", " + (rs[i].getTime() * 1000).ToString();
+				}
+				else if (rs[i].getKey().Equals("2"))
+				{
+					if (twopoints.Equals("")) twopoints += (rs[i].getTime() * 1000).ToString();
+					else twopoints += ", " + (rs[i].getTime() * 1000).ToString();
+				}
+				else if (rs[i].getKey().Equals("3"))
+				{
+					if (threepoints.Equals("")) threepoints += (rs[i].getTime() * 1000).ToString();
+					else threepoints += ", " + (rs[i].getTime() * 1000).ToString();
+				}
+
 			}
 		}
-			string json = "{\"api_key\":\"" + apikey + "\","
-			+ "\"data\":[{\"type\":\"reaction\", \"game\":\"moba\", \"datapoints\":["+datapoints+"]}]}";
+			string json = "{\"api_key\":\"" + apikey + "\",\"data\":[" +
+
+            "{\"type\":\"reaction_mouse\", \"game\":\"moba\", \"datapoints\":[" +
+			mousepoints + "]}," +
+			"{\"type\":\"reaction_key\", \"game\":\"moba\", \"datapoints\":[" +
+			keypoints + "]}," +
+
+			"{\"type\":\"reaction_Q\", \"game\":\"moba\", \"datapoints\":[" +
+			qpoints + "]}," +
+			"{\"type\":\"reaction_W\", \"game\":\"moba\", \"datapoints\":[" +
+			wpoints + "]}," +
+			"{\"type\":\"reaction_E\", \"game\":\"moba\", \"datapoints\":[" +
+			epoints + "]}," +
+			"{\"type\":\"reaction_R\", \"game\":\"moba\", \"datapoints\":[" +
+			rpoints + "]}," +
+			"{\"type\":\"reaction_1\", \"game\":\"moba\", \"datapoints\":[" +
+			onepoints + "]}," +
+			"{\"type\":\"reaction_2\", \"game\":\"moba\", \"datapoints\":[" +
+			twopoints + "]}," +
+			"{\"type\":\"reaction_3\", \"game\":\"moba\", \"datapoints\":[" +
+			threepoints + "]}," +
+
+			"{\"type\":\"accuracy_mouse\", \"game\":\"moba\", \"datapoints\":[" +
+			ma + "]}," +
+			"{\"type\":\"accuracy_key\", \"game\":\"moba\", \"datapoints\":[" +
+			ka + "]}]}";
 
 		byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
 		request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
